@@ -1,7 +1,13 @@
 using UnityEngine;
 
 public enum Type { HEAVEN, EARTH, UNDERWORLD, NEUTRAL}
-public enum Special { HEAL, DEFEND, SPATTACK, ALL}
+public enum SpecialType { HEAL, DEFEND, SPATTACK, ALL}
+
+public class SpecialAttack
+{
+    //maybe add all the info here instead??
+    //public SpecialType specialType;
+}
 public class Creature : MonoBehaviour
 {
     public string CreatureName;
@@ -9,11 +15,8 @@ public class Creature : MonoBehaviour
     public Type type;
 
     public int attack;
-    public int defend;
-    public int heal;
-    public int specialattack;
-    public Special special;
-    public int specialAmount;
+  
+    //add special info here
     public bool specialUsed = false;
 
     public int maxHP;

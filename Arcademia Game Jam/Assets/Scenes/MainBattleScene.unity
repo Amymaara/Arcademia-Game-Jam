@@ -305,15 +305,10 @@ MonoBehaviour:
   CreatureName: Pandora
   type: 3
   attack: 5
-  defend: 0
-  heal: 0
-  specialattack: 0
-  special: 2
-  specialAmount: 10
   specialUsed: 0
   maxHP: 30
   currentHP: 30
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 130065194}
 --- !u!1 &44633616
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +474,7 @@ GameObject:
   - component: {fileID: 130065193}
   - component: {fileID: 130065194}
   m_Layer: 0
-  m_Name: Death
+  m_Name: Hope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -762,7 +757,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Death
+  m_text: Enemy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1098,6 +1093,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405417639}
   m_CullTransparentMesh: 1
+--- !u!1 &442423691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 442423692}
+  - component: {fileID: 442423693}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &442423692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442423691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1353259217}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442423693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442423691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4499671238c3e4bb9301b1704d436c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  overallManager: {fileID: 1353259219}
+  dialogueText: {fileID: 1715346297}
+  playerHUD: {fileID: 1138552560}
+  enemyHUD: {fileID: 2031001411}
+  attackButton: {fileID: 1163059199}
+  Pandora: {fileID: 801098819}
+  currentEnemy: {fileID: 6841537241297495197}
+  FamineEnemy: {fileID: 0}
+  DeathEnemy: {fileID: 6841537241297495197}
+  PrideEnemy: {fileID: 0}
+  BoxEnemy: {fileID: 0}
+  currentAppiration: {fileID: 25483119}
+  party: []
+  partyEmpty: {fileID: 1059748026}
 --- !u!1 &448420889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,7 +1398,7 @@ GameObject:
   - component: {fileID: 761586471}
   - component: {fileID: 761586472}
   m_Layer: 0
-  m_Name: Death
+  m_Name: Pandora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1532,15 +1586,10 @@ MonoBehaviour:
   CreatureName: Pandora
   type: 3
   attack: 5
-  defend: 0
-  heal: 0
-  specialattack: 0
-  special: 3
-  specialAmount: 0
   specialUsed: 0
   maxHP: 30
   currentHP: 30
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 761586472}
 --- !u!1 &807431895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,7 +2275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hope
+  m_text: Ally
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2624,6 +2673,7 @@ GameObject:
   - component: {fileID: 1138552557}
   - component: {fileID: 1138552559}
   - component: {fileID: 1138552558}
+  - component: {fileID: 1138552560}
   m_Layer: 5
   m_Name: PlayerBattleHUD
   m_TagString: Untagged
@@ -2691,6 +2741,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138552556}
   m_CullTransparentMesh: 1
+--- !u!114 &1138552560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138552556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e8a116d4f8fe542ab15560425293d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 941470377}
+  hpSlider: {fileID: 1787009722}
 --- !u!1 &1163059197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,7 +2885,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1353259217}
-  - component: {fileID: 1353259218}
   - component: {fileID: 1353259219}
   m_Layer: 0
   m_Name: Managers
@@ -2842,32 +2905,10 @@ Transform:
   m_LocalPosition: {x: 0.6170574, y: 0.07499949, z: 0.012901574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 442423692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1353259218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353259216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed4499671238c3e4bb9301b1704d436c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  overallManager: {fileID: 1353259219}
-  Pandora: {fileID: 801098819}
-  currentEnemy: {fileID: 6841537241297495197}
-  FamineEnemy: {fileID: 0}
-  DeathEnemy: {fileID: 6841537241297495197}
-  PrideEnemy: {fileID: 0}
-  BoxEnemy: {fileID: 0}
-  currentAppiration: {fileID: 25483119}
-  party: []
-  partyEmpty: {fileID: 1059748026}
 --- !u!114 &1353259219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2880,7 +2921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb945a41646f08d4890e15c36c0a2e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  room: 0
+  room: 2
   gameState: 1
 --- !u!1 &1442917883
 GameObject:
@@ -3852,6 +3893,7 @@ GameObject:
   - component: {fileID: 2031001408}
   - component: {fileID: 2031001410}
   - component: {fileID: 2031001409}
+  - component: {fileID: 2031001411}
   m_Layer: 5
   m_Name: EnemyBattleHUD
   m_TagString: Untagged
@@ -3918,6 +3960,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031001407}
   m_CullTransparentMesh: 1
+--- !u!114 &2031001411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031001407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e8a116d4f8fe542ab15560425293d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 293313831}
+  hpSlider: {fileID: 807431897}
 --- !u!212 &94777397373022575
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4053,15 +4109,10 @@ MonoBehaviour:
   CreatureName: Death
   type: 2
   attack: 5
-  defend: 0
-  heal: 0
-  specialattack: 0
-  special: 3
-  specialAmount: 0
   specialUsed: 0
   maxHP: 30
   currentHP: 30
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 94777397373022575}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
