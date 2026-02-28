@@ -3,16 +3,13 @@ using UnityEngine;
 public enum Type { HEAVEN, EARTH, UNDERWORLD, NEUTRAL}
 public enum SpecialType { HEAL, DEFEND, SPATTACK, ALL}
 
-public class SpecialAttack
-{
-    //maybe add all the info here instead??
-    //public SpecialType specialType;
-}
+
 public class Creature : MonoBehaviour
 {
     public string CreatureName;
 
     public Type type;
+    public SpecialType special;
 
     public int attack;
     public int heal;
@@ -50,11 +47,7 @@ public class Creature : MonoBehaviour
         
     }
 
-    public bool recoilDamage()
-    {
-        // we will figure this out later
-        return true;
-    }
+  
 
     public void Heal(int hp)
     {
@@ -69,6 +62,11 @@ public class Creature : MonoBehaviour
     public void Defend()
     {
         defend = true;
+    }
+
+    public void SetSpecial(SpecialType sptype)
+    {
+        special = sptype;
     }
 }
 

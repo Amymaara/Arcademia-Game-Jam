@@ -19,6 +19,17 @@ public class OverallSceneManager : MonoBehaviour
     {
         //room = BattleRoom.STARTER;
     }
+
+    public void SwitchtoDialogue()
+    {
+
+    }
+
+    public void SwitchtoBattleSystem()
+    {
+        //add backgrund
+        //disbledialoguesystem
+    }
     public void OnHeavenChoice()
     {
         // load in heaven battle group

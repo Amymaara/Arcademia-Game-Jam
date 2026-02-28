@@ -18,7 +18,9 @@ public class BattleSystem : MonoBehaviour
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
     public Button attackButton;
+    public Button hopeButton;
     public GameObject playerButtons;
+    public GameObject apparationButtons;
 
     [Header("Creatures")]
     //public Creature Pandora;
@@ -47,9 +49,27 @@ public class BattleSystem : MonoBehaviour
     IEnumerator SetupBattle()
     {
         party = partyEmpty.GetComponentsInChildren<Creature>();
-        //reset specials for each
-        //reset hp for each
+        
+        foreach (Creature creature in party) 
+        {
+            creature.defend = false;
+            creature.currentHP = creature.maxHP;
+            creature.specialUsed = false;
+        }
+        SetCorrectAppirationButtons();
         currentAppiration = party[0];
+
+        foreach (Creature creature in party)
+        {
+            if (creature != currentAppiration)
+            {
+                creature.spriteRenderer.enabled = false;
+            }
+            else
+            {
+                creature.spriteRenderer.enabled = true;
+            }
+        }
 
         if (overallManager.room == BattleRoom.EARTH) 
         {
@@ -123,7 +143,7 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = currentEnemy.name + " was defending. You are hit with recoil!";
             yield return new WaitForSeconds(1f);
 
-            bool PlayerisDead = currentAppiration.TakeDamage(currentEnemy.attack);
+            bool PlayerisDead = currentAppiration.TakeDamage(2);
             playerHUD.SetHP(currentAppiration.currentHP);
 
             yield return new WaitForSeconds(1f);
@@ -145,15 +165,61 @@ public class BattleSystem : MonoBehaviour
 
     public void OnSpecial()
     {
+        StartCoroutine(PlayerSpecialAttack());
+    }
+
+    IEnumerator PlayerSpecialAttack()
+    {
         if (currentAppiration.specialUsed)
         {
-            //let player make new choice
-            // dialogue says that you only get one special per turn
+            dialogueText.text = "You can only use your Special once per battle";
+            yield return new WaitForSeconds(2f);
+            dialogueText.text = "Choose an action...";
         }
         else
         {
-            //perform special action 
+            playerButtons.SetActive(false);
+
+            if (currentAppiration.special == SpecialType.SPATTACK) 
+            {
+                bool isDead = currentEnemy.TakeDamage(currentAppiration.specialattack);
+                playerButtons.SetActive(false);
+
+
+
+                enemyHUD.SetHP(currentEnemy.currentHP);
+                dialogueText.text = $"{currentAppiration.CreatureName} did some major damage!";
+
+                yield return new WaitForSeconds(2f);
+
+                if (isDead)
+                {
+                    state = BattleState.WON;
+                    EndBattle();
+                    yield break;
+                }
+            }
+            else if (currentAppiration.special == SpecialType.HEAL)
+            {
+                dialogueText.text = $"{currentAppiration.CreatureName} is healing you!";
+                yield return new WaitForSeconds(2f);
+
+                currentAppiration.Heal(currentAppiration.heal); // example value
+                playerHUD.SetHP(currentAppiration.currentHP);
+            }
+            else if (currentAppiration.special == SpecialType.DEFEND)
+            {
+                dialogueText.text = $"{currentAppiration.CreatureName} is defending you!";
+                yield return new WaitForSeconds(2f);
+
+                currentAppiration.Defend();
+            }
+              
         }
+
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+
     }
 
     public void OnSwitch()
@@ -162,12 +228,79 @@ public class BattleSystem : MonoBehaviour
         //set first button
         //set buttons active that relate to each party meber you have
         //carry hp over to new creature
-
+        StartCoroutine(SwitchOut());
     }
 
     //buttons for each party member that disable old spriterender, and enable new one. also set first button
+    IEnumerator SwitchOut()
+    {
+        playerButtons.SetActive(false);
 
+        dialogueText.text = "Who should join the battle?";
+        yield return new WaitForSeconds(1f);
+
+        apparationButtons.SetActive(true);
+        SetCorrectAppirationButtons();
+        EventSystem.current.SetSelectedGameObject(hopeButton.gameObject);
+        
+    }
     
+    public void SetCorrectAppirationButtons()
+    {
+        Button[] currentAppirationButtons = apparationButtons.GetComponentsInChildren<Button>(true);
+        foreach (Button button in currentAppirationButtons)
+        {
+            foreach(Creature creature in party)
+            {
+                if(creature.name == button.name)
+                {
+                    button.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+    public void onCharacterButton(GameObject button)
+    {
+        StartCoroutine(TryToSwitchOut(button));
+    }
+
+    IEnumerator TryToSwitchOut(GameObject button)
+    {
+        if (currentAppiration.name == button.name)
+        {
+            apparationButtons.SetActive(false);
+            dialogueText.text = $"{currentAppiration.name} is already on the battlefield.";
+            yield return new WaitForSeconds(2f);
+            playerButtons.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
+
+        }
+        else
+        {
+            apparationButtons.SetActive(false);
+            dialogueText.text = $"{currentAppiration.name} is leaving the battlefield.";
+            int hp = currentAppiration.currentHP;
+            yield return new WaitForSeconds(1f);
+            currentAppiration.spriteRenderer.enabled = false;
+            yield return new WaitForSeconds(1f);
+            foreach (Creature creature in party)
+            {
+                if (creature.name == button.name)
+                {
+                    creature.spriteRenderer.enabled = true;
+                    currentAppiration = creature;
+                    currentAppiration.currentHP = hp;
+                    
+                }
+            }
+            dialogueText.text = $"{currentAppiration.name} is entering the battlefield.";
+            yield return new WaitForSeconds(1f);
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
+           
+    }
+
     IEnumerator EnemyTurn()
     {
         // pick random action (0–2)
@@ -217,7 +350,7 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = $"{currentEnemy.CreatureName} is healing!";
             yield return new WaitForSeconds(1f);
 
-            currentEnemy.Heal(currentEnemy.heal); // example value
+            currentEnemy.Heal(currentEnemy.heal); 
             enemyHUD.SetHP(currentEnemy.currentHP);
         }
         else
@@ -225,7 +358,7 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = $"{currentEnemy.CreatureName} is defending!";
             yield return new WaitForSeconds(1f);
 
-            currentEnemy.Defend(); // you implement defense buff
+            currentEnemy.Defend(); 
         }
 
         yield return new WaitForSeconds(1f);
@@ -239,10 +372,12 @@ public class BattleSystem : MonoBehaviour
         if (state == BattleState.WON)
         {
             dialogueText.text = "Yes! You caught " + currentEnemy.name + ".";
+            // 
         }
         else if (state == BattleState.LOST)
         {
             dialogueText.text = "You were defeated...";
+            // show death popup/restart. 
         }
     }
 }
