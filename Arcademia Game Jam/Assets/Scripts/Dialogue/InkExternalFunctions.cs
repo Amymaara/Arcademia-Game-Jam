@@ -1,11 +1,12 @@
+using System;
 using Ink.Runtime;
 using UnityEngine;
 
-public class InkExternalFunctions : MonoBehaviour
+public class InkExternalFunctions 
 {
       public void Bind(Story story)
     {
-        story.BindExternalFunction("background", (string backgroundname) => background(backgroundname));
+        story.BindExternalFunction("background", (string imageName) => SetBackground(imageName));
 
     }
 
@@ -14,26 +15,49 @@ public class InkExternalFunctions : MonoBehaviour
         story.UnbindExternalFunction("background");
     }
 
-    public static void background(string imagename)
+    private static void SetBackground(string imageName)
     {
-        DialogueManager dialogueManager = DialogueManager.GetInstance();
-        GameObject targetObject = dialogueManager.background;
-        if (targetObject == null)
+        DialogueManager dm = DialogueManager.GetInstance();
+        if (dm == null)
         {
-            Debug.Log("Not assigned");
+            Debug.LogWarning("DialogueManager not found.");
             return;
         }
 
-        SpriteRenderer spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
-        Sprite[] sprites = dialogueManager.bgSprite;
-        foreach (Sprite sprite in sprites)
+        if (dm.backgroundImage == null)
         {
-            if (sprite.name == imagename)
-            {
-                spriteRenderer.sprite = sprite;
-                break;
-            }
+            Debug.LogWarning("DialogueManager.background not assigned.");
+            return;
         }
-        
+
+        SpriteRenderer sr = dm.backgroundImage.GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            Debug.Log("No SpriteRenderer.");
+            return;
+        }
+
+        Sprite target = FindSpriteByName(dm.bgSprite, imageName);
+        if (target == null)
+        {
+            Debug.Log("No sprite found");
+            return;
+        }
+
+        sr.sprite = target;
+    }
+
+    private static Sprite FindSpriteByName(Sprite[] sprites, string name)
+    {
+        if (sprites == null) return null;
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            var s = sprites[i];
+            if (s != null && s.name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                return s;
+        }
+
+        return null;
     }
 }
