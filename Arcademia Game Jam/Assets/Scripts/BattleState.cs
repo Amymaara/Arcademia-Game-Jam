@@ -52,6 +52,9 @@ public class BattleSystem : MonoBehaviour
         spattackButton.gameObject.SetActive(false);
         sphealButton.gameObject.SetActive(false);
 
+        playerHUD.gameObject.SetActive(true);
+        enemyHUD.gameObject.SetActive(true);
+
         DeathEnd.SetActive(false);
         FamineEnd.SetActive(false);
         PrideEnd.SetActive(false);
@@ -388,8 +391,7 @@ public class BattleSystem : MonoBehaviour
         }
         else if (state == BattleState.LOST)
         {
-            dialogueText.text = "You were defeated...";
-            // show death popup/restart. 
+            StartCoroutine(BattleLost());
         }
     }
 
@@ -405,6 +407,8 @@ public class BattleSystem : MonoBehaviour
         {
             dialogueText.text = "Yes! You caught " + currentEnemy.name + ".";
             yield return new WaitForSeconds(1f);
+            playerHUD.gameObject.SetActive(false);
+            enemyHUD.gameObject.SetActive(false);
             enemycloseUp();
             yield return new WaitForSeconds(1f);
             dialogueText.text = $"What should {currentEnemy.name}'s Special Ability be?";
@@ -503,25 +507,35 @@ public class BattleSystem : MonoBehaviour
     public void onAttackChoice()
     {
         currentAppiration.SetSpecial(SpecialType.SPATTACK);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
         StartCoroutine(NextScene("Special Attack"));
+
     }
 
     public void onHealChoice()
     {
         currentAppiration.SetSpecial(SpecialType.HEAL);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
         StartCoroutine(NextScene("Heal"));
     }
 
     public void onDefendChoice() 
     {
         currentAppiration.SetSpecial(SpecialType.DEFEND);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
         StartCoroutine(NextScene("Defend"));
     }
 
     IEnumerator NextScene(string ability)
     {
-        dialogueText.text = $"{currentAppiration.name} can now {ability} once per battle";
-        yield return new WaitForSeconds(1f);
+        dialogueText.text = $"{currentEnemy.name} can now {ability} once per battle";
+        yield return new WaitForSeconds(2f);
         dialogueText.text = "They will now join your party.";
         yield return new WaitForSeconds(2f);
         overallManager.SwitchtoDialogue();

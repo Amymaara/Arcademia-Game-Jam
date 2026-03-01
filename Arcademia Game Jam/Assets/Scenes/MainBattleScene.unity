@@ -441,7 +441,7 @@ MonoBehaviour:
   CreatureName: Hope
   type: 3
   special: 0
-  attack: 5
+  attack: 6
   heal: 10
   defend: 0
   specialattack: 12
@@ -683,7 +683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &94314903
 Transform:
   m_ObjectHideFlags: 0
@@ -715,7 +715,7 @@ MonoBehaviour:
   CreatureName: Famine
   type: 1
   special: 0
-  attack: 5
+  attack: 6
   heal: 4
   defend: 0
   specialattack: 0
@@ -2351,7 +2351,7 @@ MonoBehaviour:
   CreatureName: Pride
   type: 0
   special: 0
-  attack: 5
+  attack: 6
   heal: 10
   defend: 0
   specialattack: 12
@@ -3084,7 +3084,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 801098818}
-  - component: {fileID: 801098819}
   m_Layer: 0
   m_Name: Pandora
   m_TagString: Untagged
@@ -3108,30 +3107,6 @@ Transform:
   - {fileID: 761586471}
   m_Father: {fileID: 2014233430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &801098819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801098817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40df40486bcd2d249882361c6faa027e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CreatureName: Pandora
-  type: 3
-  special: 0
-  attack: 5
-  heal: 0
-  defend: 0
-  specialattack: 0
-  specialDefense: 0
-  specialUsed: 0
-  maxHP: 30
-  currentHP: 30
-  spriteRenderer: {fileID: 761586472}
 --- !u!1 &807431895
 GameObject:
   m_ObjectHideFlags: 0
@@ -4776,7 +4751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1046208558
 Transform:
   m_ObjectHideFlags: 0
@@ -4808,7 +4783,7 @@ MonoBehaviour:
   CreatureName: Pride
   type: 0
   special: 0
-  attack: 5
+  attack: 6
   heal: 4
   defend: 0
   specialattack: 0
@@ -4971,7 +4946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1093223881
 Transform:
   m_ObjectHideFlags: 0
@@ -5003,7 +4978,7 @@ MonoBehaviour:
   CreatureName: Pandora's Box
   type: 2
   special: 0
-  attack: 5
+  attack: 6
   heal: 4
   defend: 0
   specialattack: 0
@@ -5286,7 +5261,7 @@ MonoBehaviour:
   CreatureName: Death
   type: 2
   special: 0
-  attack: 5
+  attack: 6
   heal: 10
   defend: 0
   specialattack: 12
@@ -7053,7 +7028,7 @@ MonoBehaviour:
   CreatureName: Famine
   type: 1
   special: 0
-  attack: 5
+  attack: 6
   heal: 10
   defend: 0
   specialattack: 12
@@ -8006,7 +7981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6841537241297495197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8022,7 +7997,7 @@ MonoBehaviour:
   CreatureName: Death
   type: 2
   special: 0
-  attack: 5
+  attack: 6
   heal: 4
   defend: 0
   specialattack: 0
