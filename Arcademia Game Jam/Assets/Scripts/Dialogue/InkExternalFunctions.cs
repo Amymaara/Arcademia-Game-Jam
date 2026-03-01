@@ -24,13 +24,13 @@ public class InkExternalFunctions
             return;
         }
 
-        if (dm.backgroundImage == null)
+        if (dm.backgroundSprites == null)
         {
             Debug.LogWarning("DialogueManager.background not assigned.");
             return;
         }
 
-        SpriteRenderer sr = dm.backgroundImage.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = dm.backgroundSprites.GetComponent<SpriteRenderer>();
         if (sr == null)
         {
             Debug.Log("No SpriteRenderer.");

@@ -6,7 +6,7 @@ VAR death_done = false
 
 === pandora_home ===
 
-#bg 
+#bg: PandoraHouse_0
 #speaker: Hope
 
 "Hey."
@@ -88,7 +88,7 @@ VAR death_done = false
 
 === explanation_system  ===
 
-#bg
+#bg: PandoraHouse_0
 
 #speaker: Pandora
 
@@ -238,7 +238,7 @@ VAR death_done = false
 
 === choose_path ===
 
-#bg 
+#bg: PandoraHouse_0
 
 #speaker: Pandora 
 
@@ -257,7 +257,7 @@ VAR death_done = false
 
 === pride_scene ===
 
-#bg 
+#bg: Heaven_0
 
 #speaker: Pandora 
 
@@ -293,8 +293,6 @@ VAR death_done = false
 
 " Get ready, they're here.
 
-#bg 
-
 #speaker: Pride
 
 " You stand before perfection."
@@ -326,7 +324,7 @@ VAR death_done = false
 
 === pride_after ===
 
-#bg
+#bg: Heaven_0
 #speaker: Pride 
 
 "Impossible..."
@@ -356,7 +354,7 @@ VAR death_done = false
 
 === famine_scene ===
 
-#bg
+#bg: Earth_0
 
 #speaker: Pandora 
 
@@ -398,8 +396,6 @@ VAR death_done = false
 
 " i can sense them, prepare yourself."
 
-#bg
-
 #speaker: Famine
 
 "Hungry..."
@@ -430,7 +426,7 @@ VAR death_done = false
 
 === famine_after ===
 
-#bg 
+#bg: Earth_0
 
 #speaker: Famine
 
@@ -456,7 +452,7 @@ VAR death_done = false
 
 === death_scene ===
 
-#bg
+#bg:Underworld_0
 #speaker: Pandora 
 
 " So this is fun and all -"
@@ -511,7 +507,6 @@ VAR death_done = false
 
 " Very bad at healing."
 
-#bg
 
 #speaker: Death
 " All things return to me."
@@ -540,7 +535,7 @@ VAR death_done = false
 
 === death_after ===
 
-#bg
+#bg: Underworld_0
 #speaker: Death
 
 " Interesting. "
@@ -571,7 +566,7 @@ VAR death_done = false
 
 === final_area ===
 
-#bg 
+#bg: Box_0
 
 #speaker: Hope
 "We're finally here."
@@ -638,7 +633,7 @@ VAR death_done = false
  
  === final_after ===
  
- #bg
+ #bg: Box_0
  
  #Speaker: Hope
  

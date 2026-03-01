@@ -2,7 +2,7 @@
 
 === conclusion ===
 
-#bg
+#bg: Box_closed_0
 
 Pandora's box is sealed once more.
 
@@ -18,7 +18,7 @@ The box can hold them again once more.
 
 But only if our hero's can find them first.
 
-#bg
+// #bg
 
 And so they continue their journey.
 

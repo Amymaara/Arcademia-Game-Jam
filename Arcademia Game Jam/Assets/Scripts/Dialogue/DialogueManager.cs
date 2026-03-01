@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject choicedPanel;
 
     [Header("Backgrounds")]
-    public Image backgroundImage;
+    public SpriteRenderer backgroundSprites;
     public Sprite[] bgSprite;
 
     [Header("Canvas")]
@@ -217,13 +217,13 @@ public class DialogueManager : MonoBehaviour
 
     private void ChangeBackground(string value)
     {
-       if (backgroundImage == null)
+       if (backgroundSprites == null)
         {
             Debug.Log("no bg");
             return;
         }
 
-       if (bgSprite != null || bgSprite.Length == 0)
+       if (bgSprite == null || bgSprite.Length == 0)
         {
             Debug.Log("bgSprites empty");
             return ;
@@ -234,7 +234,7 @@ public class DialogueManager : MonoBehaviour
             Sprite s = bgSprite[i];
             if (s != null && s.name.Equals(value, System.StringComparison.OrdinalIgnoreCase))
             {
-                backgroundImage.sprite = s;
+                backgroundSprites.sprite = s;
                 return;
             }
         }
