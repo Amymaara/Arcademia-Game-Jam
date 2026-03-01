@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1313741191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: SelectChoice
         m_Mode: 3
@@ -2326,7 +2326,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1313741191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: SelectChoice
         m_Mode: 3
@@ -6208,7 +6208,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1313741191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: SelectChoice
         m_Mode: 3
@@ -6442,6 +6442,7 @@ MonoBehaviour:
   backgroundImage: {fileID: 0}
   bgSprite: []
   dialogueCanvas: {fileID: 1313741189}
+  overallscenemanager: {fileID: 0}
 --- !u!1 &1346560077
 GameObject:
   m_ObjectHideFlags: 0
@@ -6578,6 +6579,8 @@ MonoBehaviour:
   gameState: 1
   battleEnvironment: {fileID: 2014233429}
   battleUI: {fileID: 448420889}
+  dialogueSystem: {fileID: 0}
+  battleSystem: 0
 --- !u!1 &1415601679
 GameObject:
   m_ObjectHideFlags: 0
@@ -9229,7 +9232,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1313741191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
         m_MethodName: SelectChoice
         m_Mode: 3

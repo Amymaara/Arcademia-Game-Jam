@@ -601,6 +601,6 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
         dialogueText.text = "They will now join your party.";
         yield return new WaitForSeconds(2f);
-        overallManager.SwitchtoDialogue();
+        overallManager.ReturnToDialogue();
     }
 }

@@ -20,22 +20,56 @@ public class OverallSceneManager : MonoBehaviour
      */
     public void OnEnable()
     {
-        //room = BattleRoom.STARTER;
+        room = BattleRoom.STARTER;
+        battleEnvironment.SetActive(false);
+        battleUI.SetActive(false);
     }
 
-    public void SwitchtoDialogue()
+    public GameObject dialogueSystem;
+    public BattleState battleSystem;
+
+    DialogueManager currentDialogue;
+
+    public void SwitchtoBattleSystem(string enemyID, DialogueManager dialogue)
     {
-        Debug.Log("Dialogue System started");
+        currentDialogue = dialogue;
+
+        dialogueSystem.SetActive(false);
         battleEnvironment.SetActive(false);
         battleUI.SetActive(false);
 
+        if (enemyID == "death")
+        {
+            room = BattleRoom.UNDERWORLD;
+        }
+        else if (enemyID == "famine")
+        {
+            room = BattleRoom.EARTH;
+        }
+        else if(enemyID == "pride")
+        {
+            room = BattleRoom.HEAVEN;
+        }
+        else if (enemyID == "box")
+        {
+            room = BattleRoom.PANDORA;
+        }
+
+            battleEnvironment.SetActive(true);
+        battleUI.SetActive(true);
     }
 
-    public void SwitchtoBattleSystem()
+    public void ReturnToDialogue()
     {
-        //add backgrund
-        //disbledialoguesystem
+        battleEnvironment.SetActive(false);
+        battleUI.SetActive(false);
+        dialogueSystem.SetActive(true);
+
+        currentDialogue.ResumeDialogue();
     }
+  
+
+   
     public void OnHeavenChoice()
     {
         // load in heaven battle group

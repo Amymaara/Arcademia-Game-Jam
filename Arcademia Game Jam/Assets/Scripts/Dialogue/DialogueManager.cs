@@ -137,6 +137,19 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
 
+    public void PauseDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        choicedPanel.SetActive(false);
+    }
+
+    public void ResumeDialogue()
+    {
+        dialoguePanel.SetActive(true);
+        
+        ContinueStory();
+    }
+
     public void SelectChoice(int index)
     {
         HideChoices();
@@ -183,10 +196,16 @@ public class DialogueManager : MonoBehaviour
                 case "bg":
                     ChangeBackground(value);
                     break;
+
+                case "battle":
+                    overallscenemanager.SwitchtoBattleSystem(value, this);
+                    break;
             }
         }
        
     }
+
+    public OverallSceneManager overallscenemanager;
 
     private void ChangeBackground(string value)
     {
