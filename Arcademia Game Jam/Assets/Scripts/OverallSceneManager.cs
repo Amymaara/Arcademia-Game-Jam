@@ -55,7 +55,7 @@ public class OverallSceneManager : MonoBehaviour
             room = BattleRoom.PANDORA;
         }
 
-            battleEnvironment.SetActive(true);
+        battleEnvironment.SetActive(true);
         battleUI.SetActive(true);
     }
 
