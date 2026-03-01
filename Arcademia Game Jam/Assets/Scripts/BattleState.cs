@@ -35,6 +35,8 @@ public class BattleSystem : MonoBehaviour
     public Creature[] party;
     public GameObject partyEmpty;
 
+    bool bossfight;
+
     public void OnEnable()
     {
         state = BattleState.START;
@@ -58,6 +60,8 @@ public class BattleSystem : MonoBehaviour
         DeathEnd.SetActive(false);
         FamineEnd.SetActive(false);
         PrideEnd.SetActive(false);
+
+        DeathButtons.SetActive(false);
 
         party = partyEmpty.GetComponentsInChildren<Creature>();
         
@@ -85,25 +89,33 @@ public class BattleSystem : MonoBehaviour
         if (overallManager.room == BattleRoom.EARTH) 
         {
             currentEnemy = FamineEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.HEAVEN)
         {
             currentEnemy = PrideEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.UNDERWORLD)
         {
             currentEnemy = DeathEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.PANDORA)
         {
             currentEnemy = BoxEnemy;
+            bossfight = true;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try to reseal it!";
         }
 
         currentEnemy.gameObject.SetActive(true);
-        dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
+        
 
         playerHUD.SetHUD(currentAppiration);
         enemyHUD.SetHUD(currentEnemy);
@@ -131,15 +143,16 @@ public class BattleSystem : MonoBehaviour
     {
         bool enemyDefending = currentEnemy.defend;
         
-        bool isDead = currentEnemy.TakeDamage(currentAppiration.attack);
+        bool isDead = currentEnemy.TakeDamagewithTypings(currentAppiration.attack, currentAppiration.type);
         playerButtons.SetActive(false);
 
         
         playerButtons.SetActive(false);
         enemyHUD.SetHP(currentEnemy.currentHP);
-        dialogueText.text = "The Attack was Succesful";
-
-        yield return new WaitForSeconds(2f);
+        dialogueText.text = $"{currentAppiration.name} is preparing to attack";
+        yield return new WaitForSeconds(1f);
+        dialogueText.text = currentEnemy.EffectiveDialogue(currentAppiration.type);
+        yield return new WaitForSeconds(1f);
 
         if (isDead) 
         { 
@@ -306,7 +319,8 @@ public class BattleSystem : MonoBehaviour
                     creature.spriteRenderer.enabled = true;
                     currentAppiration = creature;
                     currentAppiration.currentHP = hp;
-                    
+                    playerHUD.SetHUD(currentAppiration);
+
                 }
             }
             dialogueText.text = $"{currentAppiration.name} is entering the battlefield.";
@@ -317,10 +331,48 @@ public class BattleSystem : MonoBehaviour
            
     }
 
+    string PandoraBoxSwitchTypes()
+    {
+        int type = Random.Range(0, 3);
+
+        if (type == 0)
+        {
+            currentEnemy.SetType(Type.NEUTRAL);
+            return "Pandora's box is now a neutral type.";
+        }
+        else if (type == 1) 
+        {
+            currentEnemy.SetType(Type.HEAVEN);
+            return "Pandora's box is now a heaven type.";
+        }
+        else if (type == 2) 
+        {
+            currentEnemy.SetType(Type.EARTH);
+            return "Pandora's box is now an earth type.";
+        }
+        else 
+        {
+            currentEnemy.SetType(Type.UNDERWORLD);
+            return "Pandora's box is now an underworld type.";
+        }
+    }
+
+    int battlecounter = 0;
     IEnumerator EnemyTurn()
     {
         // pick random action (0–2)
-        int action = Random.Range(0, 3);
+       
+
+        if (bossfight)
+        {
+            battlecounter++;
+            if (battlecounter % 3 == 0)
+            {
+                dialogueText.text = PandoraBoxSwitchTypes();
+                yield return new WaitForSeconds(2f);
+            }
+        }
+        int action = Random.Range(0, 2);
 
         if (action == 0)
         {
@@ -328,8 +380,11 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             bool playerDefending = currentAppiration.defend;
-            bool isDead = currentAppiration.TakeDamage(currentEnemy.attack);
+            bool isDead = currentAppiration.TakeDamagewithTypings(currentEnemy.attack, currentEnemy.type);
             playerHUD.SetHP(currentAppiration.currentHP);
+            yield return new WaitForSeconds(1f);
+
+            dialogueText.text = currentEnemy.EffectiveDialogue(currentEnemy.type);
 
             yield return new WaitForSeconds(1f);
 
@@ -420,11 +475,19 @@ public class BattleSystem : MonoBehaviour
        
     }
 
+    public GameObject DeathButtons;
     IEnumerator BattleLost()
     {
         dialogueText.text = "You were defeated...";
         yield return new WaitForSeconds(1f);
         // show death popup
+        DeathButtons.SetActive(true);
+
+    }
+
+    public void onDeathButton()
+    {
+        // load main menu
     }
 
     public GameObject DeathEnd;
