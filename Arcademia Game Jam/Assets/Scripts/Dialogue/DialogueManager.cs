@@ -126,19 +126,21 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoices()
     {
-        choicedPanel.SetActive(true);
+        
         for (int i = 0; i < currentStory.currentChoices.Count; i++)
         {
             choices[i].SetActive(true);
             choicesText[i].text = currentStory.currentChoices[i].text;
            
         }
+        choicedPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
 
     public void SelectChoice(int index)
     {
-        choicedPanel.SetActive(true);
+        HideChoices();
+        choicedPanel.SetActive(false);
         currentStory.ChooseChoiceIndex(index);
         ContinueStory() ;
     }
