@@ -1,13 +1,14 @@
-using TMPro;
-using UnityEngine;
 using Ink.Runtime;
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.SearchService;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEngine.UI;
+using TMPro;
 using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SearchService;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
+    [SerializeField] private GameObject choicedPanel;
 
     [Header("Backgrounds")]
     public Image backgroundImage;
@@ -74,11 +76,12 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         HideChoices();
+        StartDialogue();
 
     }
 
 
-    public void StartDialogue(TextAsset inkJSON)
+    public void StartDialogue()
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
@@ -102,6 +105,9 @@ public class DialogueManager : MonoBehaviour
 
            HandleTags(currentStory.currentTags);
 
+            if (!dialoguePanel.activeSelf)
+                return;
+
             if (currentStory.currentChoices.Count > 0)
             {
                 DisplayChoices();
@@ -109,7 +115,9 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
+                HideChoices();
                 continueButton.gameObject.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
             }
 
         }
@@ -122,17 +130,38 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoices()
     {
+        
         for (int i = 0; i < currentStory.currentChoices.Count; i++)
         {
             choices[i].SetActive(true);
             choicesText[i].text = currentStory.currentChoices[i].text;
+           
         }
+        choicedPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+    }
+
+    public void PauseDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        choicedPanel.SetActive(false);
+    }
+
+    public void ResumeDialogue()
+    {
+        dialoguePanel.SetActive(true);
+        
+        ContinueStory();
     }
 
     public void SelectChoice(int index)
     {
+        
+        choicedPanel.SetActive(false);
         currentStory.ChooseChoiceIndex(index);
+        //HideChoices();
         ContinueStory() ;
+        //HideChoices();
     }
 
     private void HideChoices()
@@ -171,22 +200,30 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case "bg":
+                    
                     ChangeBackground(value);
+                    break;
+
+                case "battle":
+                    PauseDialogue();
+                    overallscenemanager.SwitchtoBattleSystem(value, this);
                     break;
             }
         }
        
     }
 
+    public OverallSceneManager overallscenemanager;
+
     private void ChangeBackground(string value)
     {
-       if (backgroundImage != null)
+       if (backgroundImage == null)
         {
             Debug.Log("no bg");
             return;
         }
 
-       if (bgSprite == null || bgSprite.Length == 0)
+       if (bgSprite != null || bgSprite.Length == 0)
         {
             Debug.Log("bgSprites empty");
             return ;

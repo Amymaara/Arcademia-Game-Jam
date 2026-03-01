@@ -9,6 +9,12 @@ public class OverallSceneManager : MonoBehaviour
     public GameState gameState;
     public GameObject battleEnvironment;
     public GameObject battleUI;
+    public GameObject battleSystem;
+
+    public GameObject Heavenbg;
+    public GameObject Earthbg;
+    public GameObject Pandorabg;
+    public GameObject Underworldbg;
     /* 
      This is going to control the flow of the game
 
@@ -20,22 +26,70 @@ public class OverallSceneManager : MonoBehaviour
      */
     public void OnEnable()
     {
-        //room = BattleRoom.STARTER;
-    }
-
-    public void SwitchtoDialogue()
-    {
-        Debug.Log("Dialogue System started");
+        room = BattleRoom.STARTER;
         battleEnvironment.SetActive(false);
         battleUI.SetActive(false);
-
     }
 
-    public void SwitchtoBattleSystem()
+    public GameObject dialogueSystem;
+    
+
+    DialogueManager currentDialogue;
+
+    public void SwitchtoBattleSystem(string enemyID, DialogueManager dialogue)
     {
-        //add backgrund
-        //disbledialoguesystem
+        currentDialogue = dialogue;
+
+        dialogueSystem.SetActive(false);
+        battleEnvironment.SetActive(true);
+        battleUI.SetActive(true);
+        //battleSystem.SetActive(true);
+
+        if (enemyID == "death")
+        {
+            room = BattleRoom.UNDERWORLD;
+            Underworldbg.SetActive(true) ;
+        }
+        else if (enemyID == "famine")
+        {
+            room = BattleRoom.EARTH;
+            Earthbg.SetActive(true) ;
+        }
+        else if(enemyID == "pride")
+        {
+            room = BattleRoom.HEAVEN;
+            Heavenbg.SetActive(true) ;
+        }
+        else if (enemyID == "box")
+        {
+            room = BattleRoom.PANDORA;
+            Pandorabg.SetActive(true);
+        }
+
+        battleSystem.SetActive(true);
+        //battleEnvironment.SetActive(true);
+        //battleUI.SetActive(true);
     }
+
+    public void ReturnToDialogue()
+    {
+        Heavenbg.SetActive(false);
+        Underworldbg.SetActive(false);
+        Pandorabg.SetActive(false);
+        Earthbg.SetActive(false);
+        battleEnvironment.SetActive(false);
+        battleUI.SetActive(false);
+        
+        battleSystem.SetActive(false);
+        dialogueSystem.SetActive(true);
+
+
+
+        currentDialogue.ResumeDialogue();
+    }
+  
+
+   
     public void OnHeavenChoice()
     {
         // load in heaven battle group

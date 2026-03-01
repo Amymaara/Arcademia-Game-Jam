@@ -320,7 +320,7 @@ VAR death_done = false
 
 " You two are really... something else."
 
-// go into battle here
+#battle: pride
 
 -> pride_after
 
@@ -424,7 +424,7 @@ VAR death_done = false
 
 " Let's do this."
 
-// go into battle 
+#battle: famine 
 
 -> famine_after
 
@@ -534,7 +534,7 @@ VAR death_done = false
 
 " They gives me the ick, let's finish this quickly."
 
-// battle 
+#battle: death 
 
 -> death_after
 
@@ -631,6 +631,8 @@ VAR death_done = false
  " Okay NOW, you're talking my language."
  
  " Let's do this."
+ 
+ #battle: box
  
  -> final_after 
  

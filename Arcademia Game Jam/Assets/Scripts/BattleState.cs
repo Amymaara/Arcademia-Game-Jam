@@ -40,9 +40,11 @@ public class BattleSystem : MonoBehaviour
     public void OnEnable()
     {
         state = BattleState.START;
+        EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
+        playerButtons.SetActive(false);
         StartCoroutine(SetupBattle());
         //EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
-        playerButtons.SetActive(false);
+        //playerButtons.SetActive(false);
 
 
 
@@ -601,6 +603,6 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
         dialogueText.text = "They will now join your party.";
         yield return new WaitForSeconds(2f);
-        overallManager.SwitchtoDialogue();
+        overallManager.ReturnToDialogue();
     }
 }
