@@ -1,13 +1,14 @@
-using TMPro;
-using UnityEngine;
 using Ink.Runtime;
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.SearchService;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEngine.UI;
+using TMPro;
 using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SearchService;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -74,11 +75,12 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         HideChoices();
+        StartDialogue();
 
     }
 
 
-    public void StartDialogue(TextAsset inkJSON)
+    public void StartDialogue()
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
@@ -110,6 +112,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 continueButton.gameObject.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
             }
 
         }
@@ -126,7 +129,9 @@ public class DialogueManager : MonoBehaviour
         {
             choices[i].SetActive(true);
             choicesText[i].text = currentStory.currentChoices[i].text;
+           
         }
+        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
 
     public void SelectChoice(int index)
