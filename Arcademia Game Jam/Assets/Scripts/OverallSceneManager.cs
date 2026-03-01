@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum BattleRoom { STARTER, HEAVEN, UNDERWORLD, EARTH, PANDORA}
@@ -6,6 +7,8 @@ public class OverallSceneManager : MonoBehaviour
 {
     public BattleRoom room;
     public GameState gameState;
+    public GameObject battleEnvironment;
+    public GameObject battleUI;
     /* 
      This is going to control the flow of the game
 
@@ -22,6 +25,9 @@ public class OverallSceneManager : MonoBehaviour
 
     public void SwitchtoDialogue()
     {
+        Debug.Log("Dialogue System started");
+        battleEnvironment.SetActive(false);
+        battleUI.SetActive(false);
 
     }
 

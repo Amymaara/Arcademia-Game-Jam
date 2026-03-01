@@ -48,6 +48,17 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
+
+        playerHUD.gameObject.SetActive(true);
+        enemyHUD.gameObject.SetActive(true);
+
+        DeathEnd.SetActive(false);
+        FamineEnd.SetActive(false);
+        PrideEnd.SetActive(false);
+
         party = partyEmpty.GetComponentsInChildren<Creature>();
         
         foreach (Creature creature in party) 
@@ -172,9 +183,13 @@ public class BattleSystem : MonoBehaviour
     {
         if (currentAppiration.specialUsed)
         {
-            dialogueText.text = "You can only use your Special once per battle";
+            dialogueText.text = $"You can only use {currentAppiration.name}'s Special once per battle";
+            playerButtons.SetActive(false);
             yield return new WaitForSeconds(2f);
             dialogueText.text = "Choose an action...";
+            playerButtons.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
+            yield break;
         }
         else
         {
@@ -217,6 +232,7 @@ public class BattleSystem : MonoBehaviour
               
         }
 
+        currentAppiration.specialUsed = true;
         state = BattleState.ENEMYTURN;
         StartCoroutine(EnemyTurn());
 
@@ -371,13 +387,157 @@ public class BattleSystem : MonoBehaviour
     {
         if (state == BattleState.WON)
         {
-            dialogueText.text = "Yes! You caught " + currentEnemy.name + ".";
-            // 
+            StartCoroutine(BattleWon());
         }
         else if (state == BattleState.LOST)
         {
-            dialogueText.text = "You were defeated...";
-            // show death popup/restart. 
+            StartCoroutine(BattleLost());
         }
+    }
+
+    IEnumerator BattleWon()
+    {
+        if (overallManager.room == BattleRoom.PANDORA)
+        {
+            dialogueText.text = "You sealed Pandora's box!";
+            yield return new WaitForSeconds(1f);
+            // load in end scene
+        }
+        else
+        {
+            dialogueText.text = "Yes! You caught " + currentEnemy.name + ".";
+            yield return new WaitForSeconds(1f);
+            playerHUD.gameObject.SetActive(false);
+            enemyHUD.gameObject.SetActive(false);
+            enemycloseUp();
+            yield return new WaitForSeconds(1f);
+            dialogueText.text = $"What should {currentEnemy.name}'s Special Ability be?";
+            yield return new WaitForSeconds(1f);
+            enemyAddToParty();
+            
+
+        }
+       
+    }
+
+    IEnumerator BattleLost()
+    {
+        dialogueText.text = "You were defeated...";
+        yield return new WaitForSeconds(1f);
+        // show death popup
+    }
+
+    public GameObject DeathEnd;
+    public GameObject FamineEnd;
+    public GameObject PrideEnd;
+
+    
+    public Button spattackButton;
+    public Button spdefendButton;
+    public Button sphealButton;
+
+
+
+    void enemycloseUp()
+    {
+       
+        if (currentEnemy.name == DeathEnemy.name) 
+        {
+            DeathEnd.SetActive(true);
+            
+        }
+        else if (currentEnemy.name == FamineEnemy.name)
+        {
+            FamineEnd.SetActive(true);
+           
+        }
+        else if (currentEnemy.name == PrideEnemy.name)
+        {
+            
+            PrideEnd.SetActive(true);
+        }
+    }
+
+    void enemyAddToParty()
+    {
+        Creature tempCreature;
+       
+        
+        if (currentEnemy.name == DeathEnemy.name)
+        {
+            spdefendButton.gameObject.SetActive(true);
+            spattackButton.gameObject.SetActive(true);
+            sphealButton.gameObject.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(spattackButton.gameObject);
+            deathAlly.SetActive(true);
+            tempCreature = prideAlly.GetComponent<Creature>();
+            tempCreature.spriteRenderer.enabled = false;
+            currentAppiration = tempCreature;
+        }
+        else if (currentEnemy.name == FamineEnemy.name)
+        {
+            spdefendButton.gameObject.SetActive(false);
+            spattackButton.gameObject.SetActive(true);
+            sphealButton.gameObject.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(spattackButton.gameObject);
+            famineAlly.SetActive(true);
+            tempCreature = prideAlly.GetComponent<Creature>();
+            tempCreature.spriteRenderer.enabled = false;
+            currentAppiration = tempCreature;
+        }
+        else if (currentEnemy.name == PrideEnemy.name)
+        {
+            spdefendButton.gameObject.SetActive(true);
+            spattackButton.gameObject.SetActive(false);
+            sphealButton.gameObject.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(spdefendButton.gameObject);
+            prideAlly.SetActive(true);
+            tempCreature = prideAlly.GetComponent<Creature>();
+            tempCreature.spriteRenderer.enabled = false;
+            currentAppiration = tempCreature;
+
+        }
+
+    }
+
+    public GameObject famineAlly;
+    public GameObject deathAlly;
+    public GameObject prideAlly;
+
+    public void onAttackChoice()
+    {
+        currentAppiration.SetSpecial(SpecialType.SPATTACK);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
+        StartCoroutine(NextScene("Special Attack"));
+
+    }
+
+    public void onHealChoice()
+    {
+        currentAppiration.SetSpecial(SpecialType.HEAL);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
+        StartCoroutine(NextScene("Heal"));
+    }
+
+    public void onDefendChoice() 
+    {
+        currentAppiration.SetSpecial(SpecialType.DEFEND);
+        spdefendButton.gameObject.SetActive(false);
+        spattackButton.gameObject.SetActive(false);
+        sphealButton.gameObject.SetActive(false);
+        StartCoroutine(NextScene("Defend"));
+    }
+
+    IEnumerator NextScene(string ability)
+    {
+        dialogueText.text = $"{currentEnemy.name} can now {ability} once per battle";
+        yield return new WaitForSeconds(2f);
+        dialogueText.text = "They will now join your party.";
+        yield return new WaitForSeconds(2f);
+        overallManager.SwitchtoDialogue();
     }
 }
