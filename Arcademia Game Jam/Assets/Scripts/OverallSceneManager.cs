@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public enum BattleRoom { STARTER, HEAVEN, UNDERWORLD, EARTH, PANDORA}
 public enum GameState { DIALOGUE, BATTLE }
@@ -38,6 +39,7 @@ public class OverallSceneManager : MonoBehaviour
 
     public void SwitchtoBattleSystem(string enemyID, DialogueManager dialogue)
     {
+        dialogue.portraitPanel.SetActive(false);
         currentDialogue = dialogue;
 
         dialogueSystem.SetActive(false);
@@ -73,6 +75,7 @@ public class OverallSceneManager : MonoBehaviour
 
     public void ReturnToDialogue()
     {
+        DialogueManager.GetInstance().portraitPanel.SetActive(true);
         Heavenbg.SetActive(false);
         Underworldbg.SetActive(false);
         Pandorabg.SetActive(false);

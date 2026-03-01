@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.SearchService;
 using UnityEngine.UI;
 
@@ -27,11 +29,19 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject choicedPanel;
 
     [Header("Backgrounds")]
-    public Image backgroundImage;
+    public SpriteRenderer backgroundSprites;
     public Sprite[] bgSprite;
 
     [Header("Canvas")]
     public GameObject dialogueCanvas;
+
+    [Header("Portraits")]
+    public GameObject pandoraPortrait;
+    public GameObject hopePortrait;
+    public GameObject faminePortrait;
+    public GameObject deathPortrait;
+    public GameObject pridePortrait;
+    public GameObject portraitPanel;
 
     [Header("Tags")]
     private const string SPEAKER_TAG = "speaker";
@@ -208,6 +218,17 @@ public class DialogueManager : MonoBehaviour
                     PauseDialogue();
                     overallscenemanager.SwitchtoBattleSystem(value, this);
                     break;
+                case "scene":
+                    ChangeScene(value);
+                    break;
+
+                 case "show":
+                    SetPortrait(value, true);
+                    break;
+
+                case "hide":
+                    SetPortrait(value, false);
+                    break;
             }
         }
        
@@ -217,13 +238,13 @@ public class DialogueManager : MonoBehaviour
 
     private void ChangeBackground(string value)
     {
-       if (backgroundImage == null)
+       if (backgroundSprites == null)
         {
             Debug.Log("no bg");
             return;
         }
 
-       if (bgSprite != null || bgSprite.Length == 0)
+       if (bgSprite == null || bgSprite.Length == 0)
         {
             Debug.Log("bgSprites empty");
             return ;
@@ -234,11 +255,55 @@ public class DialogueManager : MonoBehaviour
             Sprite s = bgSprite[i];
             if (s != null && s.name.Equals(value, System.StringComparison.OrdinalIgnoreCase))
             {
-                backgroundImage.sprite = s;
+                backgroundSprites.sprite = s;
                 return;
             }
         }
         Debug.Log(" bg sprite not found");
     }
 
+    private void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void SetPortrait(string name, bool on)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return;
+
+        switch (name.Trim().ToLowerInvariant())
+        {
+            case "pandora":
+                pandoraPortrait.SetActive(on);
+                break;
+
+            case "hope":
+                hopePortrait.SetActive(on);
+                break;
+
+            case "famine":
+                faminePortrait.SetActive(on);
+                break;
+
+            case "death":
+                deathPortrait.SetActive(on);
+                break;
+
+            case "pride":
+                pridePortrait.SetActive(on);
+                break;
+
+            case "none":
+                if (pandoraPortrait != null) pandoraPortrait.SetActive(false);
+                if (hopePortrait != null) hopePortrait.SetActive(false);
+                if (faminePortrait != null) faminePortrait.SetActive(false);
+                if (deathPortrait != null) deathPortrait.SetActive(false);
+                if (pridePortrait != null) pridePortrait.SetActive(false);
+                break;
+
+            default:
+                Debug.LogWarning("no portrait");
+                break;
+        }
+    }
 }
