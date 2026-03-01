@@ -1,10 +1,12 @@
-using TMPro;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum BattleState{ START, PLAYERTURN, ENEMYTURN, WON, LOST }
 
@@ -335,7 +337,7 @@ public class BattleSystem : MonoBehaviour
 
     string PandoraBoxSwitchTypes()
     {
-        int type = Random.Range(0, 3);
+        int type = UnityEngine.Random.Range(0, 3);
 
         if (type == 0)
         {
@@ -374,7 +376,7 @@ public class BattleSystem : MonoBehaviour
                 yield return new WaitForSeconds(2f);
             }
         }
-        int action = Random.Range(0, 2);
+        int action = UnityEngine.Random.Range(0, 2);
 
         if (action == 0)
         {
@@ -459,6 +461,7 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = "You sealed Pandora's box!";
             yield return new WaitForSeconds(1f);
             // load in end scene
+            SceneManager.LoadScene(3);
         }
         else
         {
@@ -489,7 +492,7 @@ public class BattleSystem : MonoBehaviour
 
     public void onDeathButton()
     {
-        // load main menu
+        SceneManager.LoadScene(0);
     }
 
     public GameObject DeathEnd;
