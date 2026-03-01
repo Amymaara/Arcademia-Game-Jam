@@ -105,6 +105,9 @@ public class DialogueManager : MonoBehaviour
 
            HandleTags(currentStory.currentTags);
 
+            if (!dialoguePanel.activeSelf)
+                return;
+
             if (currentStory.currentChoices.Count > 0)
             {
                 DisplayChoices();
@@ -112,6 +115,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
+                HideChoices();
                 continueButton.gameObject.SetActive(true);
                 EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
             }
@@ -152,10 +156,12 @@ public class DialogueManager : MonoBehaviour
 
     public void SelectChoice(int index)
     {
-        HideChoices();
+        
         choicedPanel.SetActive(false);
         currentStory.ChooseChoiceIndex(index);
+        //HideChoices();
         ContinueStory() ;
+        //HideChoices();
     }
 
     private void HideChoices()
@@ -194,10 +200,12 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case "bg":
+                    
                     ChangeBackground(value);
                     break;
 
                 case "battle":
+                    PauseDialogue();
                     overallscenemanager.SwitchtoBattleSystem(value, this);
                     break;
             }
@@ -209,13 +217,13 @@ public class DialogueManager : MonoBehaviour
 
     private void ChangeBackground(string value)
     {
-       if (backgroundImage != null)
+       if (backgroundImage == null)
         {
             Debug.Log("no bg");
             return;
         }
 
-       if (bgSprite == null || bgSprite.Length == 0)
+       if (bgSprite != null || bgSprite.Length == 0)
         {
             Debug.Log("bgSprites empty");
             return ;

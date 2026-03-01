@@ -40,9 +40,11 @@ public class BattleSystem : MonoBehaviour
     public void OnEnable()
     {
         state = BattleState.START;
+        EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
+        playerButtons.SetActive(false);
         StartCoroutine(SetupBattle());
         //EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
-        playerButtons.SetActive(false);
+        //playerButtons.SetActive(false);
 
 
 

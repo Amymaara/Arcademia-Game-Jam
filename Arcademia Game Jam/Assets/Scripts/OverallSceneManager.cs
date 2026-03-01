@@ -9,6 +9,7 @@ public class OverallSceneManager : MonoBehaviour
     public GameState gameState;
     public GameObject battleEnvironment;
     public GameObject battleUI;
+    public GameObject battleSystem;
     /* 
      This is going to control the flow of the game
 
@@ -26,7 +27,7 @@ public class OverallSceneManager : MonoBehaviour
     }
 
     public GameObject dialogueSystem;
-    public BattleState battleSystem;
+    
 
     DialogueManager currentDialogue;
 
@@ -35,8 +36,9 @@ public class OverallSceneManager : MonoBehaviour
         currentDialogue = dialogue;
 
         dialogueSystem.SetActive(false);
-        battleEnvironment.SetActive(false);
-        battleUI.SetActive(false);
+        battleEnvironment.SetActive(true);
+        battleUI.SetActive(true);
+        //battleSystem.SetActive(true);
 
         if (enemyID == "death")
         {
@@ -55,14 +57,16 @@ public class OverallSceneManager : MonoBehaviour
             room = BattleRoom.PANDORA;
         }
 
-        battleEnvironment.SetActive(true);
-        battleUI.SetActive(true);
+        battleSystem.SetActive(true);
+        //battleEnvironment.SetActive(true);
+        //battleUI.SetActive(true);
     }
 
     public void ReturnToDialogue()
     {
         battleEnvironment.SetActive(false);
         battleUI.SetActive(false);
+        battleSystem.SetActive(false);
         dialogueSystem.SetActive(true);
 
         currentDialogue.ResumeDialogue();
