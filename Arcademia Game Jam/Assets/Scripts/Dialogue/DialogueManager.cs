@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
+    [SerializeField] private GameObject choicedPanel;
 
     [Header("Backgrounds")]
     public Image backgroundImage;
@@ -125,6 +126,7 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoices()
     {
+        choicedPanel.SetActive(true);
         for (int i = 0; i < currentStory.currentChoices.Count; i++)
         {
             choices[i].SetActive(true);
@@ -136,6 +138,7 @@ public class DialogueManager : MonoBehaviour
 
     public void SelectChoice(int index)
     {
+        choicedPanel.SetActive(true);
         currentStory.ChooseChoiceIndex(index);
         ContinueStory() ;
     }
