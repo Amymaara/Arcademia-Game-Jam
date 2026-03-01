@@ -127,6 +127,11 @@ public class Creature : MonoBehaviour
     {
         special = sptype;
     }
+
+    public void SetType(Type newType)
+    {
+        type = newType;
+    }
 }
 
 

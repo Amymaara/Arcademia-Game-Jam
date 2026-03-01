@@ -35,6 +35,8 @@ public class BattleSystem : MonoBehaviour
     public Creature[] party;
     public GameObject partyEmpty;
 
+    bool bossfight;
+
     public void OnEnable()
     {
         state = BattleState.START;
@@ -85,25 +87,33 @@ public class BattleSystem : MonoBehaviour
         if (overallManager.room == BattleRoom.EARTH) 
         {
             currentEnemy = FamineEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.HEAVEN)
         {
             currentEnemy = PrideEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.UNDERWORLD)
         {
             currentEnemy = DeathEnemy;
+            bossfight = false;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
         }
 
         else if (overallManager.room == BattleRoom.PANDORA)
         {
             currentEnemy = BoxEnemy;
+            bossfight = true;
+            dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try to reseal it!";
         }
 
         currentEnemy.gameObject.SetActive(true);
-        dialogueText.text = "Is that ... " + currentEnemy.CreatureName + "? Lets try catch it!";
+        
 
         playerHUD.SetHUD(currentAppiration);
         enemyHUD.SetHUD(currentEnemy);
@@ -319,10 +329,48 @@ public class BattleSystem : MonoBehaviour
            
     }
 
+    string PandoraBoxSwitchTypes()
+    {
+        int type = Random.Range(0, 3);
+
+        if (type == 0)
+        {
+            currentEnemy.SetType(Type.NEUTRAL);
+            return "Pandora's box is now a neutral type.";
+        }
+        else if (type == 1) 
+        {
+            currentEnemy.SetType(Type.HEAVEN);
+            return "Pandora's box is now a heaven type.";
+        }
+        else if (type == 2) 
+        {
+            currentEnemy.SetType(Type.EARTH);
+            return "Pandora's box is now an earth type.";
+        }
+        else 
+        {
+            currentEnemy.SetType(Type.UNDERWORLD);
+            return "Pandora's box is now an underworld type.";
+        }
+    }
+
+    int battlecounter = 0;
     IEnumerator EnemyTurn()
     {
         // pick random action (0–2)
-        int action = Random.Range(0, 3);
+       
+
+        if (bossfight)
+        {
+            battlecounter++;
+            if (battlecounter % 3 == 0)
+            {
+                dialogueText.text = PandoraBoxSwitchTypes();
+                yield return new WaitForSeconds(2f);
+            }
+        }
+        int action = Random.Range(0, 2);
 
         if (action == 0)
         {
