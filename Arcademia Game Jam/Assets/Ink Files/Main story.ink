@@ -258,11 +258,16 @@ VAR death_done = false
 
 " So where do you want to go?"
 
+DEBUG: pride={pride_done}, famine={famine_done}, death={death_done}
 
-* {pride_done == false} Ouranos (Mount Olympus) -> pride_scene
-* {famine_done == false} Gaia (Earth) -> famine_scene
-* {death_done == false} Erebos (Underworld) -> death_scene 
-*{pride_done && famine_done && death_done} Pandora's Box -> final_area
++ {pride_done == false} Ouranos (Mount Olympus)
+    -> pride_scene
++ {famine_done == false} Gaia (Earth)
+    -> famine_scene
++ {death_done == false} Erebos (Underworld)
+    -> death_scene
++ {pride_done && famine_done && death_done} Pandora's Box
+    -> final_area
 
 === pride_scene ===
 
@@ -447,6 +452,8 @@ VAR death_done = false
 -> famine_after
 
 === famine_after ===
+
+~ famine_done = true
 #show: hope
 #show: pandora 
 #show: famine
@@ -568,6 +575,8 @@ VAR death_done = false
 #show: pandora 
 #show: death
 
+~ death_done = true
+
 #bg: Underworld_0
 #speaker: Death
 
@@ -666,7 +675,7 @@ VAR death_done = false
  #hide: none
  #battle: box
  
- -> DONE
+ -> END
 
 
 
