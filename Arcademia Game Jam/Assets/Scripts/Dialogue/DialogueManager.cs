@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.SearchService;
 using UnityEngine.UI;
 
@@ -208,6 +210,9 @@ public class DialogueManager : MonoBehaviour
                     PauseDialogue();
                     overallscenemanager.SwitchtoBattleSystem(value, this);
                     break;
+                case "scene":
+                    ChangeScene(value);
+                    break;
             }
         }
        
@@ -239,6 +244,11 @@ public class DialogueManager : MonoBehaviour
             }
         }
         Debug.Log(" bg sprite not found");
+    }
+
+    private void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
 }

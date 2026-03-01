@@ -35,5 +35,5 @@ Everything had already escaped.
 
 No, one remained.
 
-// invoke next scene
+#scene: MainBattleScene
 -> DONE

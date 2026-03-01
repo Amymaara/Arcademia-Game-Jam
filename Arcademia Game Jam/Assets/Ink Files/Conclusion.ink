@@ -49,6 +49,7 @@
 
 === conclusion ===
 
+#speaker: Narrator
 #bg: Box_closed_0
 
 Pandora's box is sealed once more.
