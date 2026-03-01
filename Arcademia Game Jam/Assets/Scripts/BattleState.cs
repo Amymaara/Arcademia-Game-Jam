@@ -131,15 +131,16 @@ public class BattleSystem : MonoBehaviour
     {
         bool enemyDefending = currentEnemy.defend;
         
-        bool isDead = currentEnemy.TakeDamage(currentAppiration.attack);
+        bool isDead = currentEnemy.TakeDamagewithTypings(currentAppiration.attack, currentAppiration.type);
         playerButtons.SetActive(false);
 
         
         playerButtons.SetActive(false);
         enemyHUD.SetHP(currentEnemy.currentHP);
-        dialogueText.text = "The Attack was Succesful";
-
-        yield return new WaitForSeconds(2f);
+        dialogueText.text = $"{currentAppiration.name} is preparing to attack";
+        yield return new WaitForSeconds(1f);
+        dialogueText.text = currentEnemy.EffectiveDialogue(currentAppiration.type);
+        yield return new WaitForSeconds(1f);
 
         if (isDead) 
         { 
@@ -306,7 +307,8 @@ public class BattleSystem : MonoBehaviour
                     creature.spriteRenderer.enabled = true;
                     currentAppiration = creature;
                     currentAppiration.currentHP = hp;
-                    
+                    playerHUD.SetHUD(currentAppiration);
+
                 }
             }
             dialogueText.text = $"{currentAppiration.name} is entering the battlefield.";
@@ -328,8 +330,11 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             bool playerDefending = currentAppiration.defend;
-            bool isDead = currentAppiration.TakeDamage(currentEnemy.attack);
+            bool isDead = currentAppiration.TakeDamagewithTypings(currentEnemy.attack, currentEnemy.type);
             playerHUD.SetHP(currentAppiration.currentHP);
+            yield return new WaitForSeconds(1f);
+
+            dialogueText.text = currentEnemy.EffectiveDialogue(currentEnemy.type);
 
             yield return new WaitForSeconds(1f);
 
