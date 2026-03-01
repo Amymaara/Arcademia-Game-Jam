@@ -61,6 +61,8 @@ public class BattleSystem : MonoBehaviour
         FamineEnd.SetActive(false);
         PrideEnd.SetActive(false);
 
+        DeathButtons.SetActive(false);
+
         party = partyEmpty.GetComponentsInChildren<Creature>();
         
         foreach (Creature creature in party) 
@@ -473,11 +475,19 @@ public class BattleSystem : MonoBehaviour
        
     }
 
+    public GameObject DeathButtons;
     IEnumerator BattleLost()
     {
         dialogueText.text = "You were defeated...";
         yield return new WaitForSeconds(1f);
         // show death popup
+        DeathButtons.SetActive(true);
+
+    }
+
+    public void onDeathButton()
+    {
+        // load main menu
     }
 
     public GameObject DeathEnd;
