@@ -752,6 +752,12 @@ MonoBehaviour:
   - {fileID: 6771633027046615620, guid: e2bcf78d92cb08d498251c944b923cdc, type: 3}
   - {fileID: 301869939308420495, guid: f8d2f23f85c76c241aa0c3223dea21bc, type: 3}
   dialogueCanvas: {fileID: 3164065177943781397}
+  pandoraPortrait: {fileID: 0}
+  hopePortrait: {fileID: 0}
+  faminePortrait: {fileID: 0}
+  deathPortrait: {fileID: 0}
+  pridePortrait: {fileID: 0}
+  portraitPanel: {fileID: 0}
   overallscenemanager: {fileID: 0}
 --- !u!1 &3790164779868812925
 GameObject:
@@ -1117,15 +1123,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
