@@ -64,8 +64,13 @@ public class BattleSystem : MonoBehaviour
         DeathEnd.SetActive(false);
         FamineEnd.SetActive(false);
         PrideEnd.SetActive(false);
+        
 
         DeathButtons.SetActive(false);
+
+        DeathEnemy.gameObject.SetActive(false);
+        FamineEnemy.gameObject.SetActive(false);
+        PrideEnemy.gameObject.SetActive(false);
 
         party = partyEmpty.GetComponentsInChildren<Creature>();
         
