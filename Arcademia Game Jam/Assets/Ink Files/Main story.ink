@@ -5,6 +5,9 @@ VAR death_done = false
 -> pandora_home
 
 === pandora_home ===
+#hide: none
+#show: hope
+#show: pandora 
 
 #bg: PandoraHouse_0
 #speaker: Hope
@@ -84,9 +87,11 @@ VAR death_done = false
 
 " See! I told you it'll work itself out eventually... balance and stuff."
 
+
 -> explanation_system 
 
 === explanation_system  ===
+
 
 #bg: PandoraHouse_0
 
@@ -234,9 +239,12 @@ VAR death_done = false
 
 " Worth the risk if you ask me."
 
+#portait: none
+
 -> choose_path
 
 === choose_path ===
+
 
 #bg: PandoraHouse_0
 
@@ -250,12 +258,14 @@ VAR death_done = false
 
 " So where do you want to go?"
 
+
 * {pride_done == false} Ouranos (Mount Olympus) -> pride_scene
 * {famine_done == false} Gaia (Earth) -> famine_scene
 * {death_done == false} Erebos (Underworld) -> death_scene 
 *{pride_done && famine_done && death_done} Pandora's Box -> final_area
 
 === pride_scene ===
+
 
 #bg: Heaven_0
 
@@ -293,6 +303,7 @@ VAR death_done = false
 
 " Get ready, they're here.
 
+#show: pride
 #speaker: Pride
 
 " You stand before perfection."
@@ -317,12 +328,17 @@ VAR death_done = false
 #speaker: Hope
 
 " You two are really... something else."
+#hide: none
 
 #battle: pride
 
 -> pride_after
 
 === pride_after ===
+
+#show: hope
+#show: pandora 
+#show: pride
 
 #bg: Heaven_0
 #speaker: Pride 
@@ -350,9 +366,13 @@ VAR death_done = false
 
 " Let's hope it was the better choice for the battle to come."
 
+#hide: none
 -> choose_path
 
 === famine_scene ===
+
+#show: hope
+#show: pandora 
 
 #bg: Earth_0
 
@@ -396,6 +416,7 @@ VAR death_done = false
 
 " i can sense them, prepare yourself."
 
+#show: famine
 #speaker: Famine
 
 "Hungry..."
@@ -420,11 +441,15 @@ VAR death_done = false
 
 " Let's do this."
 
+#hide: none
 #battle: famine 
 
 -> famine_after
 
 === famine_after ===
+#show: hope
+#show: pandora 
+#show: famine
 
 #bg: Earth_0
 
@@ -448,9 +473,13 @@ VAR death_done = false
 
 " Let's continue our adventure then."
 
+#hide: none
 -> choose_path
 
 === death_scene ===
+
+#show: hope
+#show: pandora 
 
 #bg:Underworld_0
 #speaker: Pandora 
@@ -507,7 +536,7 @@ VAR death_done = false
 
 " Very bad at healing."
 
-
+#show: death
 #speaker: Death
 " All things return to me."
 
@@ -529,11 +558,15 @@ VAR death_done = false
 
 " They gives me the ick, let's finish this quickly."
 
+#hide: none
 #battle: death 
 
 -> death_after
 
 === death_after ===
+#show: hope
+#show: pandora 
+#show: death
 
 #bg: Underworld_0
 #speaker: Death
@@ -562,9 +595,12 @@ VAR death_done = false
 
 " Very well, but pace youself."
 
+#hide: none
 -> choose_path
 
 === final_area ===
+#show: hope
+#show: pandora 
 
 #bg: Box_0
 
@@ -627,6 +663,7 @@ VAR death_done = false
  
  " Let's do this."
  
+ #hide: none
  #battle: box
  
  -> DONE

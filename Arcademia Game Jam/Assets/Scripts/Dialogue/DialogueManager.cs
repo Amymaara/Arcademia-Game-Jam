@@ -35,6 +35,14 @@ public class DialogueManager : MonoBehaviour
     [Header("Canvas")]
     public GameObject dialogueCanvas;
 
+    [Header("Portraits")]
+    public GameObject pandoraPortrait;
+    public GameObject hopePortrait;
+    public GameObject faminePortrait;
+    public GameObject deathPortrait;
+    public GameObject pridePortrait;
+    public GameObject portraitPanel;
+
     [Header("Tags")]
     private const string SPEAKER_TAG = "speaker";
     private const string BG_TAG = "bg";
@@ -213,6 +221,14 @@ public class DialogueManager : MonoBehaviour
                 case "scene":
                     ChangeScene(value);
                     break;
+
+                 case "show":
+                    SetPortrait(value, true);
+                    break;
+
+                case "hide":
+                    SetPortrait(value, false);
+                    break;
             }
         }
        
@@ -251,4 +267,43 @@ public class DialogueManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    private void SetPortrait(string name, bool on)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return;
+
+        switch (name.Trim().ToLowerInvariant())
+        {
+            case "pandora":
+                pandoraPortrait.SetActive(on);
+                break;
+
+            case "hope":
+                hopePortrait.SetActive(on);
+                break;
+
+            case "famine":
+                faminePortrait.SetActive(on);
+                break;
+
+            case "death":
+                deathPortrait.SetActive(on);
+                break;
+
+            case "pride":
+                pridePortrait.SetActive(on);
+                break;
+
+            case "none":
+                if (pandoraPortrait != null) pandoraPortrait.SetActive(false);
+                if (hopePortrait != null) hopePortrait.SetActive(false);
+                if (faminePortrait != null) faminePortrait.SetActive(false);
+                if (deathPortrait != null) deathPortrait.SetActive(false);
+                if (pridePortrait != null) pridePortrait.SetActive(false);
+                break;
+
+            default:
+                Debug.LogWarning("no portrait");
+                break;
+        }
+    }
 }
